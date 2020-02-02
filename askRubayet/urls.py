@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
 
-from ask import views as askViews
+# from ask import views as askViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
