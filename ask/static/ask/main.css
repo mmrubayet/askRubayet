@@ -3,6 +3,9 @@ body {
   color: #333333;
   margin-top: 5rem;
 }
+div {
+  text-align: justify;
+}
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
@@ -13,15 +16,20 @@ ul {
 }
 
 .bg-steel {
-  background-color: #5f788a;
+  background-color: rgba(153, 204, 255, .9);
+  color: #5c5c8a;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+  color: #400080;
+}
+
+.navbar-brand:hover {
+  color: #26004d;
 }
 
 .site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
+  color: #cc99ff;
 }
 
 .site-header .navbar-nav .nav-link.active {
