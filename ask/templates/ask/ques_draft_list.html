@@ -1,5 +1,4 @@
 {% extends "ask/base.html" %}
-
 {% block content %}
 
 <div class="container">
@@ -20,7 +19,15 @@
       <p>{{ que.answer }}</p>
 
     {% else %}
-    <p>Answer not published yet! Please come back later.</p>
+      {% if not user.is_authenticated %}
+        <p>Answer is not published yet! Please come back later.</p>
+      {% else %}
+        <p>Answer is not published yet!</p>
+        <a class="btn btn-success" href="{% url 'ques_publish' pk=que.pk %}">Publish Now</a>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <a class="btn btn-info" href="{% url 'ques_edit' pk=que.pk %}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
+      {% endif %}
 
     {% endif %}
 

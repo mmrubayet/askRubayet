@@ -1,7 +1,5 @@
 {% extends "ask/base.html" %}
 
-  <title>{{ que.title }}</title>
-
 {% block content %}
 
 <div class="container">
@@ -11,37 +9,35 @@
     <p>Asked on: {{ que.created_date }}</p>
     <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
     <p class="lead">{{ que.text|linebreaksbr }}</p>
-    <hr class="my-4">
+
+    {% if user.is_authenticated or que.published_date %}
+      <hr class="my-4">
+      {% if que.published_date %}
+        <p>On: {{ que.published_date }}</p>
+      {% endif %}
+
+      {% if que.author.first_name %}
+        <h5>{{ que.author.first_name }} Says:</h5>
+      {% else %}
+        <h5>{{ que.author }} Says:</h5>
+      {% endif %}
+      <p>{{ que.answer }}</p>
+    {% endif %}
 
     {% if not que.published_date %}
-
-      <p>Answer not published yet! Please come back later.</p>
       <hr class="my-4">
-    {% else %}
-    <p>On: {{ que.published_date }}</p>
+      {% if not user.is_authenticated %}
+        <p>Answer is not published yet! Please come back later.</p>
+      {% else %}
+        <p>Answer is not published yet!</p>
+        <a class="btn btn-success" href="{% url 'ques_publish' pk=que.pk %}">Publish Now</a>
+      {% endif %}
     {% endif %}
 
     {% if user.is_authenticated %}
-      {% if que.author.first_name %}
-      <h5>{{ que.author.first_name }} Says:</h5>
-      {% else %}
-      <h5>{{ que.author }} Says:</h5>
-      {% endif %}
-
-      <p>{{ que.answer }}</p>
-
-      {% if not que.published_date %}
-        <a class="btn btn-default" href="{% url 'ques_publish' pk=que.pk %}">Publish</a>
-      {% endif %}
-      <a class="btn btn-default" href="{% url 'ques_edit' pk=que.pk %}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
-
-
+      <a class="btn btn-info" href="{% url 'ques_edit' pk=que.pk %}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
     {% endif %}
 
-
   </div>
-
 </div>
-
-
 {% endblock content %}

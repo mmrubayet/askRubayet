@@ -30,6 +30,11 @@ def ques_publish(request, pk):
     que.publish()
     return redirect('ques_detail', pk=pk)
 
+def ques_unpublish(request, pk):
+    que = get_object_or_404(Question, pk=pk)
+    que.unpublish()
+    return redirect('ques_detail', pk=pk)
+
 def ques_new(request):
     if request.method == 'POST':
         form = QuesForm(request.POST)
