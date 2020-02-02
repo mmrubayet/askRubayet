@@ -1,0 +1,34 @@
+{% extends "ask/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+  {% for que in ques %}
+
+  <div class="jumbotron">
+    <p>Asked on: {{ que.created_date }}</p>
+    <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
+    <p class="lead">{{ que.text|linebreaksbr }}</p>
+    <hr class="my-4">
+    {% if que.published_date %}
+      {% if que.author.first_name %}
+      <h5>{{ que.author.first_name }} Says:</h5>
+      {% else %}
+      <h5>{{ que.author }} Says:</h5>
+      {% endif %}
+      <p>{{ que.answer }}</p>
+
+    {% else %}
+    <p>Answer not published yet! Please come back later.</p>
+
+    {% endif %}
+
+  </div>
+
+  {% endfor %}
+
+</div>
+
+
+{% endblock content %}
