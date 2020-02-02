@@ -12,7 +12,7 @@ urlpatterns = [
     path('question/<int:pk>/edit/', views.ques_edit, name = 'ques_edit'),
     path('drafts/', views.ques_draft_list, name='ques_draft_list'),
     path('question/<pk>/publish/', views.ques_publish, name='ques_publish'),
-    path('question/<pk>/unpublish/', views.ques_unpublish, name='ques_unpublish'),
+    path('question/<pk>/remove/', views.ques_remove, name='ques_remove'),
 
 
 ]
