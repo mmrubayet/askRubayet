@@ -74,13 +74,18 @@
         <!-- Sidebar Starts -->
         <div class="col-md-3">
           <div class="content-section">
-            <h4>Know more</h4>
-            <p class='text-muted' style="text-align: left;">
-            {% if user.is_authenticated %}
-              <p>You can get additional information here</p>
-            {% else %}
-              To ask a question please register and login
-            {% endif %}
+              {% if user.is_authenticated %}
+              <h3>Welcome {{ user.username }}!</h3>
+              {% else %}
+              <h3>Know more</h3>
+              {% endif %}
+
+              <p class='text-muted' style="text-align: left;">
+              {% if user.is_authenticated %}
+                <p>You can get additional information here</p>
+              {% else %}
+                To ask a question please register and login
+              {% endif %}
               <ul class="list-group">
                 <li class="list-group-item list-group-item-light">Latest Questions</li>
                 <li class="list-group-item list-group-item-light">Announcements</li>
