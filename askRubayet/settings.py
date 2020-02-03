@@ -31,14 +31,14 @@ ALLOWED_HOSTS = ['askr.mrubayet.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'ask.apps.AskConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ask',
-    'users',
     'crispy_forms',
 
 ]
