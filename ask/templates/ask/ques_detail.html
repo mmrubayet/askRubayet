@@ -8,7 +8,7 @@
   <div class="jumbotron">
     <p>Asked on: {{ que.created_date }}</p>
     <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
-    <p class="lead">{{ que.text|linebreaksbr }}</p>
+    <p>{{ que.optional_description|linebreaksbr }}</p>
 
     {% if user.is_authenticated or que.published_date %}
       <hr class="my-4">
@@ -21,7 +21,7 @@
       {% else %}
         <h5>{{ que.author }} Says:</h5>
       {% endif %}
-      <p>{{ que.answer }}</p>
+      <p class="lead">{{ que.answer }}</p>
     {% endif %}
 
     {% if not que.published_date %}

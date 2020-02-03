@@ -3,13 +3,33 @@
 {% block content %}
 
 <div class="container">
+  {% if not user.is_authenticated %}
+     <h1 class="mt-1">Welcome to askRubayet</h1>
+     <small class="container text-muted mt-4">
+        <p>This is a customized QA site, entirely developed and maintained by
+        <a href="https://www.mrubayet.com">Rubayet Mahmud</a>.
+
+        </p>
+
+        <p>
+        Currently, it's in the test period, with some basic functionalities.
+        So, there may be some bugs, but we are working on it.
+        <br>
+        In the meantime, you can read QAs send by others and answered by Rubayet.
+        Also, if you want to ask questions you can create an account from
+        the register button on the right-top side. Then, login to ask a question.
+
+        </p>
+     </small>
+
+ {% endif %}
 
   {% for que in ques %}
 
   <div class="jumbotron">
     <p>Asked on: {{ que.created_date }}</p>
     <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
-    <p class="lead">{{ que.text|linebreaksbr }}</p>
+    <p >{{ que.optional_description|linebreaksbr }}</p>
     <hr class="my-4">
     <p>On: {{ que.published_date }}</p>
     {% if que.author.first_name %}
@@ -17,7 +37,7 @@
     {% else %}
     <h5>{{ que.author }} Says:</h5>
     {% endif %}
-    <p>{{ que.answer }}</p>
+    <p class="lead">{{ que.answer }}</p>
 
 
   </div>

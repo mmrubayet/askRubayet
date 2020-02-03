@@ -1,11 +1,12 @@
 {% extends "ask/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
 <div class="container">
   <h1>Ask a Question</h1>
   <form method="POST" class="ques-form">{% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <button type="submit" class="save btn btn-default">Send</button>
   </form>
 

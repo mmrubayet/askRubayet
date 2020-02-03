@@ -5,12 +5,12 @@ from django.utils import timezone
 # Create your models here.
 
 class Question(models.Model):
-    author          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title           = models.CharField(max_length=300)
-    text            = models.TextField(blank=True, null=True)
-    answer          = models.TextField(blank=True, null=True)
-    created_date    = models.DateTimeField(default=timezone.now)
-    published_date  = models.DateTimeField(blank=True, null=True)
+    author                  = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title                   = models.CharField(max_length=300)
+    optional_description    = models.TextField(blank=True, null=True)
+    answer                  = models.TextField(blank=True, null=True)
+    created_date            = models.DateTimeField(default=timezone.now)
+    published_date          = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
         self.published_date = timezone.now()

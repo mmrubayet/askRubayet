@@ -7,4 +7,4 @@ class QuesForm(forms.ModelForm):
 
     class Meta:
         model = Question
-        fields = ('title', 'text',)
+        fields = ('title', 'optional_description',)
