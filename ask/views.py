@@ -69,13 +69,14 @@ def ques_remove(request, pk):
 
 def add_answer_to_que(request, pk):
     que = get_object_or_404(Question, pk=pk)
-    if request.method =="POST":
+    if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
             answer.que = que
+            # answer.que.author = request.user
             answer.save()
-            return redirect('ques_detail', pk=post.pk)
+            return redirect('ques_detail', pk=que.pk)
     else:
         form = AnswerForm()
     return render(request, 'ask/add_answer_to_que.html', {'form': form})

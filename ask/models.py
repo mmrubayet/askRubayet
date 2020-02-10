@@ -27,8 +27,8 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question            = models.ForeignKey('ask.question', on_delete=models.CASCADE, related_name='answer')
-    # author              = models.CharField(max_length=200)
-    author              = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author              = models.CharField(max_length=200)
+    # author              = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text                = models.TextField()
     created_date        = models.DateTimeField(default=timezone.now)
     approved_answer     = models.BooleanField(default=False)
