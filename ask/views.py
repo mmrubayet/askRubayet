@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Question
-from .forms import QuesForm
+from .forms import QuesForm, AnswerForm
 # Create your views here.
 
 
@@ -66,3 +66,16 @@ def ques_remove(request, pk):
     que = get_object_or_404(Question, pk=pk)
     que.delete()
     return redirect('ques_draft_list')
+
+def add_answer_to_que(request, pk):
+    que = get_object_or_404(Question, pk=pk)
+    if request.method =="POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.que = que
+            answer.save()
+            return redirect('ques_detail', pk=post.pk)
+    else:
+        form = AnswerForm()
+    return render(request, 'ask/add_answer_to_que.html', {'form': form})

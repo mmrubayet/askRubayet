@@ -6,22 +6,20 @@
   <h3 class="container">Details:</h3>
 
   <div class="jumbotron">
-    <p>Asked on: {{ que.created_date }}</p>
+    <small>Asked by</small>
+    {% if que.author.first_name %}
+
+      <h5>{{ que.author.first_name }}</h5>
+    {% else %}
+      <h5>{{ que.author }}</h5>
+    {% endif %}
+    <small class="text-muted"> on: {{ que.created_date }}</small>
+
+
     <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
     <p>{{ que.optional_description|linebreaksbr }}</p>
-
-    {% if user.is_authenticated or que.published_date %}
-      <hr class="my-4">
-      {% if que.published_date %}
-        <p>On: {{ que.published_date }}</p>
-      {% endif %}
-
-      {% if que.author.first_name %}
-        <h5>{{ que.author.first_name }} Says:</h5>
-      {% else %}
-        <h5>{{ que.author }} Says:</h5>
-      {% endif %}
-      <p class="lead">{{ que.answer }}</p>
+    {% if que.published_date %}
+      <small class="text-muted">Published on: {{ que.published_date }}</small>
     {% endif %}
 
     {% if not que.published_date %}
@@ -34,10 +32,36 @@
       {% endif %}
     {% endif %}
 
+    <div class="answer">
+
     {% if user.is_authenticated %}
       <a class="btn btn-info" href="{% url 'ques_edit' pk=que.pk %}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
       <a class="btn btn-danger" href="{% url 'ques_remove' pk=que.pk %}"><span class="glyphicon glyphicon-remove">Delete</span></a>
     {% endif %}
+
+  </div>
+
+
+
+    {% if user.is_authenticated or que.published_date %}
+      <hr class="my-4">
+
+      {% for ans in que.answer.all %}
+
+        <div class="answer">
+            <strong>{{ ans.author }}</strong> Says
+
+          <small class="text-muted">on {{ans.created_date }} </small>
+          <p class="lead">{{ ans.text }}</p>
+
+        </div>
+      {% empty %}
+        <p class="text-muted">No Answers here yet.</p>
+      {% endfor %}
+
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'add_answer_to_que' pk=que.pk %}">Write an Answer</a>
+
 
   </div>
 </div>

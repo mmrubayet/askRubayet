@@ -13,6 +13,8 @@ urlpatterns = [
     path('drafts/', views.ques_draft_list, name='ques_draft_list'),
     path('question/<pk>/publish/', views.ques_publish, name='ques_publish'),
     path('question/<pk>/remove/', views.ques_remove, name='ques_remove'),
+    path('question/<int:pk>/answer/', views.add_answer_to_que, name='add_answer_to_que'),
+
 
 
 ]

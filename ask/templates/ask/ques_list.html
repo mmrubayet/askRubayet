@@ -22,22 +22,41 @@
  {% endif %}
 
   {% for que in ques %}
-
   <div class="jumbotron">
-    <p>Asked on: {{ que.created_date }}</p>
+    <small>Asked by</small>
+    {% if que.author.first_name %}
+
+      <h5>{{ que.author.first_name }}</h5>
+    {% else %}
+      <h5>{{ que.author }}</h5>
+    {% endif %}
+    <small class="text-muted"> on: {{ que.created_date }}</small>
+
     <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
     <p >{{ que.optional_description|linebreaksbr }}</p>
     <hr class="my-4">
-    <p>On: {{ que.published_date }}</p>
-    {% if que.author.first_name %}
-    <h5>{{ que.author.first_name }} Says:</h5>
-    {% else %}
-    <h5>{{ que.author }} Says:</h5>
+    {% if que.published_date %}
+      <small class="text-muted">Published on: {{ que.published_date }}</small>
     {% endif %}
-    <p class="lead">{{ que.answer }}</p>
+    
+
+    <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.answer.count }}</a></p>
+
+    {% for ans in que.answer.all %}
+      <div class="answer">
+        <strong>{{ ans.author }}</strong> Says
+
+        <small class="text-muted">on {{ans.created_date }} </small>
+        <p class="lead">{{ ans.text }}</p>
+
+      </div>
+    {% empty %}
+      <p>No Answers here yet.</p>
+    {% endfor %}
 
 
   </div>
+
 
   {% endfor %}
 
