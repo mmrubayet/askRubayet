@@ -14,6 +14,11 @@ urlpatterns = [
     path('question/<pk>/publish/', views.ques_publish, name='ques_publish'),
     path('question/<pk>/remove/', views.ques_remove, name='ques_remove'),
     path('question/<int:pk>/answer/', views.add_answer_to_que, name='add_answer_to_que'),
+    path('question/<int:pk>/answer/approve/', views.answer_approve, name='answer_approve'),
+    path('question/<int:pk>/answer/remove/', views.answer_remove, name='answer_remove'),
+    path('question/<int:pk>/answer/hide/', views.answer_hide, name='answer_hide'),
+
+
 
 
 

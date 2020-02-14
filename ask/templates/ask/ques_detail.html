@@ -16,7 +16,7 @@
     <small class="text-muted"> on: {{ que.created_date }}</small>
 
 
-    <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
+    <h1 class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
     <p>{{ que.optional_description|linebreaksbr }}</p>
     {% if que.published_date %}
       <small class="text-muted">Published on: {{ que.published_date }}</small>
@@ -42,25 +42,38 @@
   </div>
 
 
-
-    {% if user.is_authenticated or que.published_date %}
+    {% if que.published_date %}
       <hr class="my-4">
-
+      <a class="btn btn-primary" href="{% url 'add_answer_to_que' pk=que.pk %}">Write an Answer</a>
       {% for ans in que.answer.all %}
 
-        <div class="answer">
-            <strong>{{ ans.author }}</strong> Says
+        {% if user.is_authenticated or ans.approved_answer %}
 
-          <small class="text-muted">on {{ans.created_date }} </small>
+        <div class="answer">
+
+          <strong>{{ ans.author }}</strong> Says
+          <small class="text-muted">on {{ ans.created_date }} </small>
           <p class="lead">{{ ans.text }}</p>
+          <div class="date">
+            {% if not ans.approved_answer %}
+              <a class="btn btn-outline-danger" href="{% url 'answer_remove' pk=ans.pk %}"><span class="glyphicon glyphicon-remove"></span>Remove</a>
+              <a class="btn btn-outline-success" href="{% url 'answer_approve' pk=ans.pk %}"><span class="glyphicon glyphicon-ok"></span>Approve</a>
+            {% endif %}
+
+            {% if ans.approved_answer %}
+              <a class="btn btn-outline-warning" href="{% url 'answer_hide' pk=ans.pk %}"><span class="glyphicon glyphicon-remove"></span>Hide</a>
+            {% endif %}
+          </div>
 
         </div>
+        {% endif %}
+
       {% empty %}
         <p class="text-muted">No Answers here yet.</p>
       {% endfor %}
 
     {% endif %}
-    <a class="btn btn-primary" href="{% url 'add_answer_to_que' pk=que.pk %}">Write an Answer</a>
+
 
 
   </div>

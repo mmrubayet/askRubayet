@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Question
+from .models import Question, Answer
 from .forms import QuesForm, AnswerForm
 # Create your views here.
 
@@ -67,14 +67,33 @@ def ques_remove(request, pk):
     que.delete()
     return redirect('ques_draft_list')
 
+@login_required
+def answer_approve(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    answer.approve()
+    return redirect('ques_detail', pk=answer.question.pk)
+
+@login_required
+def answer_remove(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    answer.delete()
+    return redirect('ques_detail', pk=answer.question.pk)
+
+@login_required
+def answer_hide(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    answer.hide()
+    return redirect('ques_detail', pk=answer.question.pk)
+
+
+
 def add_answer_to_que(request, pk):
     que = get_object_or_404(Question, pk=pk)
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
-            answer.que = que
-            # answer.que.author = request.user
+            answer.question = que
             answer.save()
             return redirect('ques_detail', pk=que.pk)
     else:

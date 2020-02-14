@@ -32,32 +32,43 @@
     {% endif %}
     <small class="text-muted"> on: {{ que.created_date }}</small>
 
-    <h1 class="display-4"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
+    <h1 class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
     <p >{{ que.optional_description|linebreaksbr }}</p>
     <hr class="my-4">
     {% if que.published_date %}
       <small class="text-muted">Published on: {{ que.published_date }}</small>
     {% endif %}
-    
 
-    <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.answer.count }}</a></p>
+    <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.approved_answer.count }}</a></p>
 
-    {% for ans in que.answer.all %}
-      <div class="answer">
-        <strong>{{ ans.author }}</strong> Says
+      {% for ans in que.answer.all %}
+        {% if ans.approved_answer %}
+        <div class="answer">
+          <strong>{{ ans.author }}</strong> Says
 
-        <small class="text-muted">on {{ans.created_date }} </small>
-        <p class="lead">{{ ans.text }}</p>
+          <small class="text-muted">on {{ans.created_date }} </small>
+          <p class="lead">{{ ans.text }}</p>
 
-      </div>
-    {% empty %}
-      <p>No Answers here yet.</p>
-    {% endfor %}
+        </div>
+        {% endif %}
+      {% empty %}
+        <p>No Answers here yet.</p>
+
+      {% endfor %}
+
 
 
   </div>
+  {% empty %}
+  <div class="container">
+
+    <p>No Question posted yet.</p>
+    <p>  <a href="{% url 'ques_new' %}">Ask a Question now</a>
+      or come back later.</p>
 
 
+
+  </div>
   {% endfor %}
 
 </div>
