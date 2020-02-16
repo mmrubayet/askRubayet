@@ -3,6 +3,12 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
+from django.views.generic import (TemplateView, ListView, DetailView,
+                                    CreateView, UpdateView, DeleteView,
+                                     )
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Question, Answer
 from .forms import QuesForm, AnswerForm
 # Create your views here.
@@ -61,11 +67,15 @@ def ques_draft_list(request):
     ques = Question.objects.filter(published_date__isnull=True).order_by('created_date')
     return render(request, 'ask/ques_draft_list.html', {'ques': ques})
 
-@login_required
-def ques_remove(request, pk):
-    que = get_object_or_404(Question, pk=pk)
-    que.delete()
-    return redirect('ques_draft_list')
+# @login_required
+# def ques_remove(request, pk):
+#     que = get_object_or_404(Question, pk=pk)
+#     que.delete()
+#     return redirect('ques_draft_list')
+
+class QuestionDeleteView(LoginRequiredMixin, DeleteView):
+    model =  Question
+    success_url = reverse_lazy('ques_list')
 
 @login_required
 def answer_approve(request, pk):
@@ -78,6 +88,10 @@ def answer_remove(request, pk):
     answer = get_object_or_404(Answer, pk=pk)
     answer.delete()
     return redirect('ques_detail', pk=answer.question.pk)
+
+# class AnswerDeleteView(LoginRequiredMixin, DeleteView):
+#     model =  Answer
+#     success_url = reverse_lazy('ques_list')
 
 @login_required
 def answer_hide(request, pk):
