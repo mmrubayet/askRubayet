@@ -83,15 +83,15 @@ def answer_approve(request, pk):
     answer.approve()
     return redirect('ques_detail', pk=answer.question.pk)
 
-@login_required
-def answer_remove(request, pk):
-    answer = get_object_or_404(Answer, pk=pk)
-    answer.delete()
-    return redirect('ques_detail', pk=answer.question.pk)
+# @login_required
+# def answer_remove(request, pk):
+#     answer = get_object_or_404(Answer, pk=pk)
+#     answer.delete()
+#     return redirect('ques_detail', pk=answer.question.pk)
 
-# class AnswerDeleteView(LoginRequiredMixin, DeleteView):
-#     model =  Answer
-#     success_url = reverse_lazy('ques_list')
+class AnswerDeleteView(LoginRequiredMixin, DeleteView):
+    model =  Answer
+    success_url = reverse_lazy('ques_list')
 
 @login_required
 def answer_hide(request, pk):
