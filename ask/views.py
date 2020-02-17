@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 from django.views.generic import (TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DeleteView,
                                      )
@@ -62,6 +62,9 @@ def ques_edit(request, pk):
 
     return render(request, 'ask/ques_edit.html', {'form': form})
 
+
+
+
 @login_required
 def question_draft_list(request):
     ques = Question.objects.filter(published_date__isnull=True).order_by('created_date')
@@ -74,6 +77,17 @@ def question_draft_list(request):
 #
 #     def get_queryset(self):
 #         return Question.objects.filter(published_date__isnull=True).order_by('created_date')
+
+
+class UserQuestionListView(ListView):
+    model = Question
+    template_name = 'ask/user_questions.html'
+    context_object_name = 'questions'
+    # paginate_by = 4
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Question.objects.filter(author=user).order_by('-date_posted')
 
 
 # @login_required

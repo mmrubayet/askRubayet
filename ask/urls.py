@@ -19,7 +19,7 @@ urlpatterns = [
     # path('question/<int:pk>/answer/remove/', views.answer_remove, name='answer_remove'),
     path('question/<int:pk>/answer/remove/', views.AnswerDeleteView.as_view(), name='answer_remove'),
     path('question/<int:pk>/answer/hide/', views.answer_hide, name='answer_hide'),
-
+    path('user/<str:username>', views.UserQuestionListView.as_view(), name='user_question'),
 
 
 
