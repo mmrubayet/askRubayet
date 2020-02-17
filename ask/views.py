@@ -20,9 +20,9 @@ def home(request):
 def about(request):
     return render(request, 'ask/about.html')
 
-def ques_list(request):
+def question_list(request):
     ques = Question.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'ask/ques_list.html', {'ques': ques})
+    return render(request, 'ask/question_list.html', {'ques': ques})
 
 def ques_detail(request, pk):
     que = get_object_or_404(Question, pk=pk)
@@ -63,9 +63,18 @@ def ques_edit(request, pk):
     return render(request, 'ask/ques_edit.html', {'form': form})
 
 @login_required
-def ques_draft_list(request):
+def question_draft_list(request):
     ques = Question.objects.filter(published_date__isnull=True).order_by('created_date')
-    return render(request, 'ask/ques_draft_list.html', {'ques': ques})
+    return render(request, 'ask/question_draft_list.html', {'ques': ques})
+
+# class QuestionDraftListView(LoginRequiredMixin, ListView):
+#     login_url = '/login/'
+#     redirect_field_name = 'ask/question_list.html'
+#     model = Question
+#
+#     def get_queryset(self):
+#         return Question.objects.filter(published_date__isnull=True).order_by('created_date')
+
 
 # @login_required
 # def ques_remove(request, pk):
@@ -75,7 +84,7 @@ def ques_draft_list(request):
 
 class QuestionDeleteView(LoginRequiredMixin, DeleteView):
     model =  Question
-    success_url = reverse_lazy('ques_list')
+    success_url = reverse_lazy('question_list')
 
 @login_required
 def answer_approve(request, pk):
@@ -91,7 +100,7 @@ def answer_approve(request, pk):
 
 class AnswerDeleteView(LoginRequiredMixin, DeleteView):
     model =  Answer
-    success_url = reverse_lazy('ques_list')
+    success_url = reverse_lazy('question_list')
 
 @login_required
 def answer_hide(request, pk):

@@ -5,12 +5,13 @@ from . import views
 
 urlpatterns = [
     # path('', views.home, name='ask-home'),
-    path('', views.ques_list, name='ques_list'),
+    path('', views.question_list, name='question_list'),
     path('about/', views.about, name='ask-about'),
     path('question/<int:pk>/', views.ques_detail, name = 'ques_detail'),
     path('question/new/', views.ques_new, name = 'ques_new'),
     path('question/<int:pk>/edit/', views.ques_edit, name = 'ques_edit'),
-    path('drafts/', views.ques_draft_list, name='ques_draft_list'),
+    path('drafts/', views.question_draft_list, name='question_draft_list'),
+    # path('drafts/', views.QuestionDraftListView.as_view(), name='question_draft_list'),
     path('question/<pk>/publish/', views.ques_publish, name='ques_publish'),
     path('question/<pk>/remove/', views.QuestionDeleteView.as_view(), name='ques_remove'),
     path('question/<int:pk>/answer/', views.add_answer_to_que, name='add_answer_to_que'),

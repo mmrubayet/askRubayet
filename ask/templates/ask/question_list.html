@@ -33,12 +33,12 @@
     <small class="text-muted"> on: {{ que.created_date }}</small>
 
     <h1 class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
-    <p >{{ que.optional_description|linebreaksbr }}</p>
-    <hr class="my-4">
+    <p >{{ que.optional_description }}</p>
+
     {% if que.published_date %}
       <small class="text-muted">Published on: {{ que.published_date }}</small>
     {% endif %}
-
+    <hr class="my-4">
     <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.approved_answer.count }}</a></p>
 
       {% for ans in que.answer.all %}
@@ -61,12 +61,10 @@
   </div>
   {% empty %}
   <div class="container">
-
+    <h1 class="mt-1">Welcome {{ user.username }}!</h1>
     <p>No Question posted yet.</p>
     <p>  <a href="{% url 'ques_new' %}">Ask a Question now</a>
       or come back later.</p>
-
-
 
   </div>
   {% endfor %}
