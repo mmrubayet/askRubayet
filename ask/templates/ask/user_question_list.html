@@ -4,7 +4,7 @@
 
 <div class="container">
 
-  <h1 class="mb-3">Question by {{ user.username }} </h1>
+  <h1 class="mb-3">Question by {{ view.kwargs.username }} </h1>
     {% for question in questions %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ question.author.profile.image.url }}">
@@ -30,7 +30,7 @@
         </article>
     {% empty %}
     <div class="container">
-      <h1 class="mt-1">Welcome {{ user.username }}!</h1>
+
       <p>You have not asked any Question yet.</p>
       <p>  <a href="{% url 'ques_new' %}">Ask a Question now</a>
         to see here.</p>
