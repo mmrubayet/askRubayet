@@ -68,7 +68,8 @@
 
   {% if page_obj.has_previous %}
     <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    <a class="btn btn-outline-info mb-4"
+    href="?page={{ page_obj.previous_page_number }}">Previous</a>
   {% endif %}
 
 
@@ -81,14 +82,18 @@
   {% endfor %}
 
   {% if page_obj.has_next %}
-    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    <a class="btn btn-outline-info mb-4"
+    href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4"
+    href="?page={{ page_obj.paginator.num_pages }}">Last</a>
   {% endif %}
 
 {% endif %}
 
-<p class="text-muted">Showing page {{ page_obj.number }} of total {{ page_obj.paginator.num_pages }} pages</p>
-<p class="text-muted">Showing {{ page_obj.object_list.count }} of {{ page_obj.paginator.count }} approved questions </p>
+<p class="text-muted">Showing {{ page_obj.object_list.count }} questions in
+  page {{ page_obj.number }} of  {{ page_obj.paginator.num_pages }}
+  pages from total {{ page_obj.paginator.count }} approved questions.
+</p>
 <!-- paginator end -->
 
 
