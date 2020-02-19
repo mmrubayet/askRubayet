@@ -35,7 +35,7 @@ class QuestionListView(ListView):
     model = Question
     template_name = 'ask/question_list.html'
     context_object_name = 'questions'
-    paginate_by = 4
+    paginate_by = 3
 
     def get_queryset(self):
         return Question.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -86,7 +86,7 @@ def question_draft_list(request):
     paginator = Paginator(questions, 2)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'ask/question_draft_list.html', {'questions': questions,'page_obj': page_obj})
+    return render(request, 'ask/question_draft_list.html', {'page_obj': page_obj})
 
 # class QuestionDraftListView(LoginRequiredMixin, ListView):
 #     login_url = '/login/'

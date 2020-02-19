@@ -8,7 +8,7 @@
   <div class="jumbotron">
     <small class="text-muted">Asked on: {{ question.created_date }}</small>
     <p class="text-muted">by {{ question.author }}</p>
-    <h1 class="display-4"><a href="{% url 'question_detail' pk=question.pk %}">{{ question.title }}</a></h1>
+    <h1 class="display-5"><a href="{% url 'question_detail' pk=question.pk %}">{{ question.title }}</a></h1>
     <p >{{ question.optional_description|linebreaksbr }}</p>
     <hr class="my-4">
 
