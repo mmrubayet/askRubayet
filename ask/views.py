@@ -22,6 +22,7 @@ def about(request):
 
 def question_list(request):
     ques = Question.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    paginate_by = 4
     return render(request, 'ask/question_list.html', {'ques': ques})
 
 def ques_detail(request, pk):
@@ -83,7 +84,7 @@ class UserQuestionListView(ListView):
     model = Question
     template_name = 'ask/user_question_list.html'
     context_object_name = 'questions'
-    # paginate_by = 4
+    paginate_by = 4
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))

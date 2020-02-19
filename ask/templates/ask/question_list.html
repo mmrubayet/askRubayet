@@ -34,26 +34,24 @@
       <small class="text-muted">Published on: {{ que.published_date }}</small>
     {% endif %}
     <hr class="my-4">
+    {% if que.approved_answer %}
     <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.approved_answer.count }}</a></p>
 
       {% for ans in que.answer.all %}
         {% if ans.approved_answer %}
-        <div class="answer">
-          <strong>{{ ans.author }}</strong> Says
-
-          <small class="text-muted">on {{ans.created_date }} </small>
-          <p class="lead">{{ ans.text }}</p>
-
-        </div>
+          <div class="answer">
+            <strong>{{ ans.author }}</strong> Says
+            <small class="text-muted">on {{ans.created_date }} </small>
+            <p class="lead">{{ ans.text }}</p>
+          </div>
         {% endif %}
-      {% empty %}
-        <p>No Answers here yet.</p>
-
       {% endfor %}
-
-
+    {% else %}
+      <p>No Answers here yet.</p>
+    {% endif %}
 
   </div>
+
   {% empty %}
   <div class="container">
     <h1 class="mt-1">Welcome {{ user.username }}!</h1>
@@ -65,6 +63,5 @@
   {% endfor %}
 
 </div>
-
 
 {% endblock content %}
