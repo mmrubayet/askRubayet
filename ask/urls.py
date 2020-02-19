@@ -5,9 +5,10 @@ from . import views
 
 urlpatterns = [
     # path('', views.home, name='ask-home'),
-    path('', views.question_list, name='question_list'),
+    # path('', views.question_list, name='question_list'),
+    path('', views.QuestionListView.as_view(), name='question_list'),
     path('about/', views.about, name='ask-about'),
-    path('question/<int:pk>/', views.ques_detail, name = 'ques_detail'),
+    path('question/<int:pk>/', views.question_detail, name = 'question_detail'),
     path('question/new/', views.ques_new, name = 'ques_new'),
     path('question/<int:pk>/edit/', views.ques_edit, name = 'ques_edit'),
     path('drafts/', views.question_draft_list, name='question_draft_list'),

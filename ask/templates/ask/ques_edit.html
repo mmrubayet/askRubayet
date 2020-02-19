@@ -5,7 +5,7 @@
 
 <div class="container">
   <h1>Ask a Question</h1>
-  <form method="POST" class="ques-form">{% csrf_token %}
+  <form method="POST" class="questions-form">{% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="save btn btn-default">Send</button>
   </form>

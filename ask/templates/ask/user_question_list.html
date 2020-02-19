@@ -13,11 +13,11 @@
               <a class="mr-2" href="{% url 'user_question_list' question.author.username %}">{{ question.author }}</a>
               <small class="text-muted">{{ question.created_date|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'ques_detail' question.id %}">{{ question.title }}</a></h2>
+            <h2><a class="article-title" href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h2>
             <p class="article-content">{{ question.optional_description }}</p>
               {% if question.published_date %}
                 {% if question.approved_answer %}
-                  <small class="display-5"><a href="{% url 'ques_detail' pk=question.pk %}">
+                  <small class="display-5"><a href="{% url 'question_detail' pk=question.pk %}">
                   {{ question.approved_answer.count }} Answers so far</a></small>
                 {% else %}
                   <small class="text-muted">No answer yet</small>
@@ -37,6 +37,7 @@
 
         </div>
     {% endfor %}
+    <!-- paginator start -->
     {% if is_paginated %}
 
       {% if page_obj.has_previous %}
@@ -58,6 +59,7 @@
       {% endif %}
 
     {% endif %}
+    <!-- paginator end -->
 
 </div>
 {% endblock content %}

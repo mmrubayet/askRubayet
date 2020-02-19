@@ -21,23 +21,23 @@
 
  {% endif %}
 
-  {% for que in ques %}
+  {% for question in questions %}
   <div class="jumbotron">
     <small>Asked by</small>
-    <h5>{{ que.author }}</h5>
-    <small class="text-muted"> on: {{ que.created_date }}</small>
+    <h5>{{ question.author }}</h5>
+    <small class="text-muted"> on: {{ question.created_date }}</small>
 
-    <h1 class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
-    <p >{{ que.optional_description }}</p>
+    <h1 class="display-5"><a href="{% url 'question_detail' pk=question.pk %}">{{ question.title }}</a></h1>
+    <p >{{ question.optional_description }}</p>
 
-    {% if que.published_date %}
-      <small class="text-muted">Published on: {{ que.published_date }}</small>
+    {% if question.published_date %}
+      <small class="text-muted">Published on: {{ question.published_date }}</small>
     {% endif %}
     <hr class="my-4">
-    {% if que.approved_answer %}
-    <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.approved_answer.count }}</a></p>
+    {% if question.approved_answer %}
+    <p class="display-5"><a href="{% url 'question_detail' pk=question.pk %}">Answers: {{ question.approved_answer.count }}</a></p>
 
-      {% for ans in que.answer.all %}
+      {% for ans in question.answer.all %}
         {% if ans.approved_answer %}
           <div class="answer">
             <strong>{{ ans.author }}</strong> Says
@@ -63,5 +63,33 @@
   {% endfor %}
 
 </div>
+<!-- paginator start -->
+{% if is_paginated %}
+
+  {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  
+  {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+      <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+      <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+  {% endif %}
+
+{% endif %}
+
+<p class="text-muted">Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} </p>
+<p class="text-muted">Showing {{ page_obj.count }} of {{ page_obj.paginator.count }} approved questions </p>
+<!-- paginator end -->
+
 
 {% endblock content %}
