@@ -7,7 +7,7 @@ from django.views.generic import (TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DeleteView,
                                      )
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Question, Answer
 from .forms import QuesForm, AnswerForm
@@ -81,13 +81,13 @@ def question_draft_list(request):
 
 class UserQuestionListView(ListView):
     model = Question
-    template_name = 'ask/user_questions.html'
+    template_name = 'ask/user_question_list.html'
     context_object_name = 'questions'
     # paginate_by = 4
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Question.objects.filter(author=user).order_by('-date_posted')
+        return Question.objects.filter(author=user).order_by('-created_date')
 
 
 # @login_required

@@ -4,91 +4,39 @@
 
 <div class="container">
 
-  <h1 class="mb-3">Question by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
-    {% for que in ques %}
+  <h1 class="mb-3">Question by {{ user.username }} </h1>
+    {% for question in questions %}
         <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ que.author.profile.image.url }}">
+          <img class="rounded-circle article-img" src="{{ question.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{% url 'user-question' que.author.username %}">{{ que.author }}</a>
-              <small class="text-muted">{{ que.date_posted|date:"F d, Y" }}</small>
+              <a class="mr-2" href="{% url 'user_question_list' question.author.username %}">{{ question.author }}</a>
+              <small class="text-muted">{{ question.created_date|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'ques_detail' que.id %}">{{ que.title }}</a></h2>
-            <p class="article-content">{{ que.content }}</p>
+            <h2><a class="article-title" href="{% url 'ques_detail' question.id %}">{{ question.title }}</a></h2>
+            <p class="article-content">{{ question.optional_description }}</p>
+              {% if question.published_date %}
+                {% if question.approved_answer %}
+                  <small class="display-5"><a href="{% url 'ques_detail' pk=question.pk %}">
+                  {{ question.approved_answer.count }} Answers so far</a></small>
+                {% else %}
+                  <small class="text-muted">No answer yet</small>
+                {% endif %}
+              {% else %}
+              <small class="text-muted">Question not published yet</small>
+              {% endif %}
+
           </div>
         </article>
-    {% endfor %}
-
-
-
-
-  {% if not user.is_authenticated %}
-     <h1 class="mt-1">Welcome to askRubayet</h1>
-     <small class="container text-muted mt-4">
-        <p>This is a customized QA site, entirely developed and maintained by
-        <a href="https://www.mrubayet.com">Rubayet Mahmud</a>.
-        </p>
-        <p>
-        Currently, it's in the test period, with some basic functionalities.
-        So, there may be some bugs, but we are working on it.
-        <br>
-        In the meantime, you can read the QAs send by others and answered by Rubayet.
-        Also, if you want to ask questions you can create an account from
-        the register button on the right-top side. Then, login to ask a question.
-        </p>
-     </small>
-
- {% endif %}
-
-  {% for que in ques %}
-  <div class="jumbotron">
-    <small>Asked by</small>
-    {% if que.author.first_name %}
-
-      <h5>{{ que.author.first_name }}</h5>
-    {% else %}
-      <h5>{{ que.author }}</h5>
-    {% endif %}
-    <small class="text-muted"> on: {{ que.created_date }}</small>
-
-    <h1 class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
-    <p >{{ que.optional_description }}</p>
-
-    {% if que.published_date %}
-      <small class="text-muted">Published on: {{ que.published_date }}</small>
-    {% endif %}
-    <hr class="my-4">
-    <p class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">Answers: {{ que.approved_answer.count }}</a></p>
-
-      {% for ans in que.answer.all %}
-        {% if ans.approved_answer %}
-        <div class="answer">
-          <strong>{{ ans.author }}</strong> Says
-
-          <small class="text-muted">on {{ans.created_date }} </small>
-          <p class="lead">{{ ans.text }}</p>
+    {% empty %}
+    <div class="container">
+      <h1 class="mt-1">Welcome {{ user.username }}!</h1>
+      <p>You have not asked any Question yet.</p>
+      <p>  <a href="{% url 'ques_new' %}">Ask a Question now</a>
+        to see here.</p>
 
         </div>
-        {% endif %}
-      {% empty %}
-        <p>No Answers here yet.</p>
-
-      {% endfor %}
-
-
-
-  </div>
-  {% empty %}
-  <div class="container">
-    <h1 class="mt-1">Welcome {{ user.username }}!</h1>
-    <p>No Question posted yet.</p>
-    <p>  <a href="{% url 'ques_new' %}">Ask a Question now</a>
-      or come back later.</p>
-
-  </div>
-  {% endfor %}
+    {% endfor %}
 
 </div>
-
-
 {% endblock content %}

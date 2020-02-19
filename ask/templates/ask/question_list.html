@@ -24,12 +24,7 @@
   {% for que in ques %}
   <div class="jumbotron">
     <small>Asked by</small>
-    {% if que.author.first_name %}
-
-      <h5>{{ que.author.first_name }}</h5>
-    {% else %}
-      <h5>{{ que.author }}</h5>
-    {% endif %}
+    <h5>{{ que.author }}</h5>
     <small class="text-muted"> on: {{ que.created_date }}</small>
 
     <h1 class="display-5"><a href="{% url 'ques_detail' pk=que.pk %}">{{ que.title }}</a></h1>
