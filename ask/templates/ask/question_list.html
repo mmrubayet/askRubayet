@@ -54,10 +54,20 @@
 
   {% empty %}
   <div class="container">
+    {% if user.is_authenticated %}
+    
+    <p>No Question posted yet.</p>
+    <p>  <a href="{% url 'question_new' %}">Ask a Question now</a>
+      or come back later.</p>
+
+    {% else %}
     <h1 class="mt-1">Welcome {{ user.username }}!</h1>
     <p>No Question posted yet.</p>
     <p>  <a href="{% url 'question_new' %}">Ask a Question now</a>
       or come back later.</p>
+
+
+    {% endif %}
 
   </div>
   {% endfor %}
